@@ -16,9 +16,9 @@ RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 RUN rm /usr/sbin/policy-rc.d
 #FIX END
 
-ADD start /opt
-RUN chmod +x /opt/start
+ADD start /
+RUN chmod +x /start
 
 #EXPOSE
 #ENTRYPOINT [""]
-CMD ["/opt/start"]
+CMD ["/start"]
