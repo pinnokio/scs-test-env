@@ -1,5 +1,29 @@
 #!/bin/bash
+SSH_DIR = /var/lib/postgresql/.ssh
 
-mkdir -p /var/run/sshd
+if [ ! -d $SSH_DIR ]; then
+	mkdir -p $SSH_DIR
+
+	case $ROLE in
+		MASTER1)
+			cp /tmp/.ssh/1/id_rsa* $SSH_DIR
+		;;
+		MASTER2)
+			cp /tmp/.ssh/2/id_rsa* $SSH_DIR
+		;;
+		SLAVE1)
+			cp /tmp/.ssh/1/authorized_keys $SSH_DIR
+		;;
+		SLAVE2)
+			cp /tmp/.ssh/2/authorized_keys $SSH_DIR
+		;;
+	esac
+fi
+
+#Starting ssh daemon
+if [ ! -d /var/run/sshd ]; then
+	mkdir -p /var/run/sshd
+fi
 /usr/sbin/sshd -D
+#Starting Postgres
 /bin/su postgres -c "/usr/lib/postgresql/9.3/bin/postgres -D /var/lib/postgresql/9.3/main -c config_file=/etc/postgresql/9.3/main/postgresql.conf"
