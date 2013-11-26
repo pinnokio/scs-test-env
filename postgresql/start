@@ -58,18 +58,10 @@ if [ ! -f /pg_config_done ]; then
 	esac
 	case $ROLE in
 		SLAVE1)
-			/bin/su postgres -c "cat > /var/lib/postgresql/9.3/main/recovery.conf <<- _EOF1_
-			standby_mode = 'on'
-			primary_conninfo = 'host=192.168.10.20 port=5432 user=postgres sslmode=require'
-			trigger_file = '/tmp/postgresql.trigger'
-			_EOF1_"
+			sh /tmp/scripts/make_recovery_1
 		;;
 		SLAVE2)
-			/bin/su postgres -c "cat > /var/lib/postgresql/9.3/main/recovery.conf <<- _EOF1_
-			standby_mode = 'on'
-			primary_conninfo = 'host=192.168.10.20 port=5432 user=postgres sslmode=require'
-			trigger_file = '/tmp/postgresql.trigger'
-			_EOF1_"
+			sh /tmp/scripts/make_recovery_2
 		;;
 	esac
 fi
