@@ -18,6 +18,8 @@ if [ ! -d $SSH_DIR ]; then
 			cp /tmp/.ssh/2/authorized_keys $SSH_DIR
 		;;
 	esac
+	
+	chown -R postgres:postgres $SSH_DIR
 fi
 
 #Starting ssh daemon
