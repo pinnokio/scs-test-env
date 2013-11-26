@@ -1,5 +1,5 @@
 #!/bin/bash
-SSH_DIR = /var/lib/postgresql/.ssh
+SSH_DIR=/var/lib/postgresql/.ssh
 
 if [ ! -d $SSH_DIR ]; then
 	mkdir -p $SSH_DIR
