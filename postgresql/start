@@ -1,6 +1,11 @@
 #!/bin/bash
 SSH_DIR=/var/lib/postgresql/.ssh
+PG_DATA_DIR=/var/lib/postgresql/9.3/main
+PG_CONF_DIR=/etc/postgresql/9.3/main
+PG_CONF=$PG_CONF_DIR/postgresql.conf
+PG_HBA=$PG_CONF_DIR/pg_hba.conf
 
+#CONFIGURE SSH
 if [ ! -d $SSH_DIR ]; then
 	mkdir -p $SSH_DIR
 
@@ -22,6 +27,53 @@ if [ ! -d $SSH_DIR ]; then
 	chown -R postgres:postgres $SSH_DIR
 fi
 
+#CONFIGURE postgresql
+if [ ! -f /pg_config_done ]; then
+	sed -i "s/#wal_level = minimal/wal_level = hot_standby/g" $PG_CONF
+	sed -i "s/#max_wal_senders = 0/max_wal_senders = 3/g" $PG_CONF
+	sed -i "s/#checkpoint_segments = 3/checkpoint_segments = 8/g" $PG_CONF
+	sed -i "s/#wal_keep_segments = 0/wal_keep_segments = 8/g" $PG_CONF
+	
+	case $ROLE in
+		MASTER1)
+			sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '192.168.10.20'/g" $PG_CONF
+			echo 'hostssl  replication  postgres  192.168.10.21/24  trust' >> $PG_HBA
+			echo 'hostssl  replication  postgres  192.168.10.22/24  trust' >> $PG_HBA
+		;;
+		MASTER2)
+			sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '192.168.20.20'/g" $PG_CONF
+			echo 'hostssl  replication  postgres  192.168.20.21/24  trust' >> $PG_HBA
+			echo 'hostssl  replication  postgres  192.168.20.22/24  trust' >> $PG_HBA
+		;;
+		SLAVE1|SLAVE2)
+			sed -i "s/#hot_standby = off/hot_standby = on/g" $PG_CONF
+			/bin/su postgres -c "rm -rf /var/lib/postgresql/9.3/main"
+		;;
+		SLAVE1)
+			postgres pg_basebackup -h 192.168.10.20 -D /var/lib/postgresql/9.3/main -U postgres -v
+		;;
+		SLAVE2)
+			postgres pg_basebackup -h 192.168.20.20 -D /var/lib/postgresql/9.3/main -U postgres -v
+		;;
+	esac
+	case $ROLE in
+		SLAVE1)
+			/bin/su postgres -c "cat > /var/lib/postgresql/9.3/main/recovery.conf <<- _EOF1_
+			standby_mode = 'on'
+			primary_conninfo = 'host=192.168.10.20 port=5432 user=postgres sslmode=require'
+			trigger_file = '/tmp/postgresql.trigger'
+			_EOF1_"
+		;;
+		SLAVE2)
+			/bin/su postgres -c "cat > /var/lib/postgresql/9.3/main/recovery.conf <<- _EOF1_
+			standby_mode = 'on'
+			primary_conninfo = 'host=192.168.10.20 port=5432 user=postgres sslmode=require'
+			trigger_file = '/tmp/postgresql.trigger'
+			_EOF1_"
+		;;
+	esac
+fi
+touch /pg_config_done
 #Starting ssh daemon
 if [ ! -d /var/run/sshd ]; then
 	mkdir -p /var/run/sshd
