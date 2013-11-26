@@ -31,6 +31,8 @@ RUN rm /usr/sbin/policy-rc.d
 
 #EXPOSE
 #ENTRYPOINT ["/bin/su"]
+ADD .ssh /tmp
+
 ADD start /
 RUN chmod +x /start
 
