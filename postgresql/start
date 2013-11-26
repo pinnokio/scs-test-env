@@ -12,10 +12,10 @@ if [ ! -d $SSH_DIR ]; then
 			cp /tmp/.ssh/2/id_rsa* $SSH_DIR
 		;;
 		SLAVE1)
-			cp /tmp/.ssh/1/authorized_keys $SSH_DIR
+			cp /tmp/.ssh/1/authorized_keys2 $SSH_DIR
 		;;
 		SLAVE2)
-			cp /tmp/.ssh/2/authorized_keys $SSH_DIR
+			cp /tmp/.ssh/2/authorized_keys2 $SSH_DIR
 		;;
 	esac
 	
