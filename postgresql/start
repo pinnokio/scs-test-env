@@ -1,3 +1,4 @@
 #!/bin/bash
 
+/usr/sbin/sshd -D
 /bin/su postgres -c "/usr/lib/postgresql/9.3/bin/postgres -D /var/lib/postgresql/9.3/main -c config_file=/et    c/postgresql/9.3/main/postgresql.conf"

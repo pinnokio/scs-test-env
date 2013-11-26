@@ -34,4 +34,4 @@ RUN rm /usr/sbin/policy-rc.d
 ADD start /
 RUN chmod +x /start
 
-CMD["/start"]
+CMD ["/start"]
