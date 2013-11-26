@@ -37,8 +37,8 @@ if [ ! -f /pg_config_done ]; then
 	case $ROLE in
 		MASTER1)
 			sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '192.168.10.20'/g" $PG_CONF
-			echo 'hostssl  replication  postgres  192.168.10.21/24  trust' >> $PG_HBA
-			echo 'hostssl  replication  postgres  192.168.10.22/24  trust' >> $PG_HBA
+			echo 'host  replication  postgres  192.168.10.21/24  trust' >> $PG_HBA
+			echo 'host  replication  postgres  192.168.10.22/24  trust' >> $PG_HBA
 		;;
 		MASTER2)
 			sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '192.168.20.20'/g" $PG_CONF
@@ -49,11 +49,13 @@ if [ ! -f /pg_config_done ]; then
 			sed -i "s/#hot_standby = off/hot_standby = on/g" $PG_CONF
 			/bin/su postgres -c "rm -rf /var/lib/postgresql/9.3/main"
 		;;
+	esac
+	case $ROLE in
 		SLAVE1)
-			postgres pg_basebackup -h 192.168.10.20 -D /var/lib/postgresql/9.3/main -U postgres -v
+			/bin/su postgres -c "pg_basebackup -h 192.168.10.20 -D /var/lib/postgresql/9.3/main -U postgres -v"
 		;;
 		SLAVE2)
-			postgres pg_basebackup -h 192.168.20.20 -D /var/lib/postgresql/9.3/main -U postgres -v
+			/bin/su postgres -c "pg_basebackup -h 192.168.20.20 -D /var/lib/postgresql/9.3/main -U postgres -v"
 		;;
 	esac
 	case $ROLE in
