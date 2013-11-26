@@ -26,7 +26,7 @@ if [ ! -d $SSH_DIR ]; then
 	
 	chown -R postgres:postgres $SSH_DIR
 fi
-
+echo "SSH Configured"
 #CONFIGURE postgresql
 if [ ! -f /pg_config_done ]; then
 	sed -i "s/#wal_level = minimal/wal_level = hot_standby/g" $PG_CONF
@@ -37,8 +37,8 @@ if [ ! -f /pg_config_done ]; then
 	case $ROLE in
 		MASTER1)
 			sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '192.168.10.20'/g" $PG_CONF
-			echo 'host  replication  postgres  192.168.10.21/24  trust' >> $PG_HBA
-			echo 'host  replication  postgres  192.168.10.22/24  trust' >> $PG_HBA
+			echo 'hostssl  replication  postgres  192.168.10.21/24  trust' >> $PG_HBA
+			echo 'hostssl  replication  postgres  192.168.10.22/24  trust' >> $PG_HBA
 		;;
 		MASTER2)
 			sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '192.168.20.20'/g" $PG_CONF
@@ -67,11 +67,14 @@ if [ ! -f /pg_config_done ]; then
 		;;
 	esac
 fi
+echo "Postgresql configured"
 touch /pg_config_done
 #Starting ssh daemon
+echo "Making sshd folder"
 if [ ! -d /var/run/sshd ]; then
 	mkdir -p /var/run/sshd
 fi
 /usr/sbin/sshd -D
+echo "Starting Postgresql"
 #Starting Postgres
 /bin/su postgres -c "/usr/lib/postgresql/9.3/bin/postgres -D /var/lib/postgresql/9.3/main -c config_file=/etc/postgresql/9.3/main/postgresql.conf"
