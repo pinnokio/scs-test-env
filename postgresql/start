@@ -36,14 +36,16 @@ if [ ! -f /pg_config_done ]; then
 	
 	case $ROLE in
 		MASTER1)
-			sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '192.168.10.20'/g" $PG_CONF
-			echo 'hostssl  replication  postgres  192.168.10.21/24  trust' >> $PG_HBA
-			echo 'hostssl  replication  postgres  192.168.10.22/24  trust' >> $PG_HBA
+			sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/g" $PG_CONF
+			echo 'host  replication  postgres  192.168.10.21/24  trust' >> $PG_HBA	
+			echo 'host  replication  postgres  192.168.10.22/24  trust' >> $PG_HBA
+			echo 'host  all          postgres  192.168.10.254/24  trust' >> $PG_HBA
 		;;
 		MASTER2)
-			sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '192.168.20.20'/g" $PG_CONF
-			echo 'hostssl  replication  postgres  192.168.20.21/24  trust' >> $PG_HBA
-			echo 'hostssl  replication  postgres  192.168.20.22/24  trust' >> $PG_HBA
+			sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/g" $PG_CONF
+			echo 'host  replication  postgres  192.168.20.21/24  trust' >> $PG_HBA
+			echo 'host  replication  postgres  192.168.20.22/24  trust' >> $PG_HBA
+			echo 'host  all          postgres  192.168.20.254/24  trust' >> $PG_HBA
 		;;
 		SLAVE1|SLAVE2)
 			sed -i "s/#hot_standby = off/hot_standby = on/g" $PG_CONF

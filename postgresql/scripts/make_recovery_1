@@ -1,6 +1,6 @@
 #!/bin/bash
 /bin/su postgres -c "cat > /var/lib/postgresql/9.3/main/recovery.conf <<- _EOF1_
 standby_mode = 'on'
-primary_conninfo = 'host=192.168.10.20 port=5432 user=postgres sslmode=require'
+primary_conninfo = 'host=192.168.10.20 port=5432 user=postgres'
 trigger_file = '/tmp/postgresql.trigger'
 _EOF1_"
