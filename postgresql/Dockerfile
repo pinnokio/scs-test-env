@@ -30,5 +30,8 @@ RUN rm /usr/sbin/policy-rc.d
 #FIX END
 
 #EXPOSE
-#ENTRYPOINT [""]
-#CMD [""]
+#ENTRYPOINT ["/bin/su"]
+ADD start /
+RUN chmod +x /start
+
+CMD["/start"]
