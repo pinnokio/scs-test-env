@@ -1,0 +1,3 @@
+#!/bin/bash
+SQL=COPY users FROM 'test_data_for_auth_db.csv' DELIMITERS ',' CSV QUOTE '''';
+psql -x -h 192.168.20.20 -p 5432 -d scs-auth -U postgres --command=$SQL 
