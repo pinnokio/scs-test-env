@@ -25,10 +25,10 @@ php-fpm-auth-image:
 php-fpm-data-image:
 	sudo docker build -t="pinnokio/php-fpm:data" php-fpm-data
  
-run-posgresql-group1:
+run-posgresql-data:
 	sh helper_scripts/pg_group1_up
 
-run-posgresql-group2:
+run-posgresql-auth:
 	sh helper_scripts/pg_group2_up
 
 run-php-fpm-auth:
@@ -38,10 +38,10 @@ run-php-fpm-data:
 	sh helper_scripts/fpm_data_up
 
 
-run-nginx-group1:
+run-nginx-data:
 	sh helper_scripts/nginx1_up
 
-run-nginx-group2:
+run-nginx-auth:
 	sh helper_scripts/nginx2_up
 
 wipe-containers:
