@@ -1,6 +1,6 @@
-!#/bin/bash
-POOL_CFG = /etc/php5/fpm/pool.d/www.conf
-WWW_DIR = /var/www
+#!/bin/bash
+POOL_CFG=/etc/php5/fpm/pool.d/www.conf
+WWW_DIR=/var/www
 
 mkdir $WWW_DIR
 
