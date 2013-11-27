@@ -32,9 +32,8 @@ run-nginx-group2:
 	sh helper_scripts/nginx2_up
 
 wipe-containers:
-	sudo docker rm $(docker ps -a -q)
+	sh helper_scripts/clean_up_from_containers
 
 kill-active-containers:
-	sudo docker kill $(docker ps -q)
-
+	sh helper_scripts/kill_active_containers
 
