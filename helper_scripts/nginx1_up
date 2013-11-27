@@ -1,0 +1,4 @@
+#!/bin/bash
+PIPE=helper_scripts/pipework
+sudo $PIPE bush1 $(docker run -d -expose 80 -e SERVER=1 pinnokio/nginx:base) 192.168.10.1/24
+echo "Nginx 1 started"
