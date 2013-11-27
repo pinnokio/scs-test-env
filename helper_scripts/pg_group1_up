@@ -1,13 +1,14 @@
 #!/bin/bash
 PG_IMG=pinnokio/postgresql:base
+PIPE=helper_scripts/pipework
 
-sudo ./pipework bush1 $(docker run -d -expose 22 -expose 5432 -e ROLE=MASTER1 $PG_IMG) 192.168.10.20/24
+sudo $PIPE bush1 $(docker run -d -expose 22 -expose 5432 -e ROLE=MASTER1 $PG_IMG) 192.168.10.20/24
 echo "Master of group 1 started"
 sleep 10
 
-sudo ./pipework bush1 $(docker run -d -expose 22 -expose 5432 -e ROLE=SLAVE1 $PG_IMG) 192.168.10.21/24
+sudo $PIPE bush1 $(docker run -d -expose 22 -expose 5432 -e ROLE=SLAVE1 $PG_IMG) 192.168.10.21/24
 echo "Slave 1 of group 1 started"
 sleep  20
 
-sudo ./pipework bush1 $(docker run -d -expose 22 -expose 5432 -e ROLE=SLAVE1 $PG_IMG) 192.168.10.22/24
+sudo $PIPE bush1 $(docker run -d -expose 22 -expose 5432 -e ROLE=SLAVE1 $PG_IMG) 192.168.10.22/24
 echo "Slave 2 of group 1 started"
