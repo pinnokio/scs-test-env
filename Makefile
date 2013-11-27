@@ -20,10 +20,10 @@ php-fpm-base-image:
 	sudo docker build -t="pinnokio/php-fpm:base" php-fpm
 
 php-fpm-auth-image:
-	sudo docker build -t="pinnokio/php-fpm:auth" php-fpm
+	sudo docker build -t="pinnokio/php-fpm:auth" php-fpm-auth
 
 php-fpm-data-image:
-	sudo docker build -t="pinnokio/php-fpm:data" php-fpm
+	sudo docker build -t="pinnokio/php-fpm:data" php-fpm-data
  
 run-posgresql-group1:
 	sh helper_scripts/pg_group1_up
