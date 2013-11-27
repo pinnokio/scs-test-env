@@ -1,3 +1,4 @@
 .stuff/
 postgresql/.ssh/
-php-fpm/laravel
+php-fpm-auth/laravel
+php-fpm-data/laravel
