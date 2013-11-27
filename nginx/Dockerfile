@@ -19,6 +19,9 @@ RUN rm /usr/sbin/policy-rc.d
 ADD start /
 RUN chmod +x /start
 
+ADD scs.conf /etc/nginx/sites-enabled/ 
+RUN rm /etc/nginx/sites-enabled/default
+
 #EXPOSE
 #ENTRYPOINT [""]
 CMD ["/start"]
