@@ -4,7 +4,7 @@ WWW_DIR=/var/www
 
 mkdir $WWW_DIR
 
-sed -i "s/listen = 127.0.0.1:9000/listen = 192.168.10.10/g" $POOL_CFG
+sed -i "s/listen = 127.0.0.1:9000/listen = 192.168.10.10:9000/g" $POOL_CFG
 sed -i "s/;listen.allowed_clients = 127.0.0.1/listen.allowed_clients = 192.168.10.1/g" $POOL_CFG
 echo "<? echo "I am working dude"; ?>" >> $WWW_DIR/index.php
 
