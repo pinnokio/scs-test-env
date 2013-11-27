@@ -25,6 +25,12 @@ run-posgresql-group1:
 run-posgresql-group2:
 	sh helper_scripts/pg_group2_up
 
+run-nginx-group1:
+	sh helper_scripts/nginx1_up
+
+run-nginx-group2:
+	sh helper_scripts/nginx2_up
+
 wipe-containers:
 	sudo docker rm $(docker ps -a -q)
 

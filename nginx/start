@@ -10,13 +10,13 @@ CONFIG=/etc/nginx/sites-enabled/scs.conf
 case $SERVER in
 	1)
 		sed -i "s/\$SERVER1/$FPM1_1/g" $CONFIG
-		sed -i "s/\$SERVER1/$FPM1_2/g" $CONFIG
+		sed -i "s/\$SERVER2/$FPM1_2/g" $CONFIG
 		sed -i "s/\$SERVER_NAME/$SERVER_NAME1/g" $CONFIG
 
 	;;
 	2)
 		sed -i "s/\$SERVER1/$FPM2_1/g" $CONFIG
-		sed -i "s/\$SERVER1/$FPM2_2/g" $CONFIG
+		sed -i "s/\$SERVER2/$FPM2_2/g" $CONFIG
 		sed -i "s/\$SERVER_NAME/$SERVER_NAME2/g" $CONFIG
 	;;
 esac
