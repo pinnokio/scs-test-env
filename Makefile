@@ -18,3 +18,9 @@ nginx-base-image:
 
 php-fpm-base-image:
 	sudo docker build -t="pinnokio/php-fpm:base" php-fpm
+
+run-posgresql-group1:
+	sh helper_scripts/pg_group1_up
+
+run-posgresql-group2:
+	sh helper_scripts/pg_group2_up

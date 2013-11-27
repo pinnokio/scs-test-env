@@ -1,0 +1,13 @@
+#!/bin/bash
+PG_IMG=pinnokio/postgresql:base
+
+sudo ./pipework bush2 $(docker run -d -expose 22 -expose 5432 -e ROLE=MASTER2 $PG_IMG) 192.168.20.20/24
+echo "Master of group 2 started"
+sleep 10
+
+sudo ./pipework bush2 $(docker run -d -expose 22 -expose 5432 -e ROLE=SLAVE2 $PG_IMG) 192.168.20.21/24
+echo "Slave 1 of group 2 started"
+sleep 20
+
+sudo ./pipework bush2 $(docker run -d -expose 22 -expose 5432 -e ROLE=SLAVE2 $PG_IMG) 192.168.20.22/24
+echo "Slave 2 of group 2 started"
