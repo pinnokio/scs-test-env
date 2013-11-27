@@ -24,3 +24,11 @@ run-posgresql-group1:
 
 run-posgresql-group2:
 	sh helper_scripts/pg_group2_up
+
+wipe-containers:
+	sudo docker rm $(docker ps -a -q)
+
+kill-active-containers:
+	sudo docker kill $(docker ps -q)
+
+
