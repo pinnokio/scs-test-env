@@ -1,3 +1,10 @@
 !#/bin/bash
+POOL_CFG = /etc/php5/fpm/pool.d/www.conf
+WWW_DIR = /var/www
+
+mkdir $WWW_DIR
+
+sed -i "s/listen = 127.0.0.1:9000/listen = 192.168.10.10/g" $POOL_CFG
+sed -i "s/;listen.allowed_clients = 127.0.0.1/listen.allowed_clients = 192.168.10.1/g" $POOL_CFG
 
 /usr/sbin/php5-fpm
