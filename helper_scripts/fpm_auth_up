@@ -1,0 +1,8 @@
+#!/bin/bash
+PIPE=helper_scripts/pipework
+
+sudo $PIPE bush2 $(docker run -d -expose 9000 pinnokio/php-fpm:auth) 192.168.20.10/24
+echo "Php-fpm auth container 1 of 2 started"
+
+sudo $PIPE bush2 $(docker run -d -expose 9000 pinnokio/php-fpm:auth) 192.168.20.11/24
+echo "Php-fpm auth container 2 of 2 started"
