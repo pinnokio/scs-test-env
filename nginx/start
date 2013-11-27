@@ -1,3 +1,23 @@
 #!/bin/bash
+SERVER_NAME1="scs-test.data"
+SERVER_NAME2="scs-test.auth"
+FPM1_1="192.168.10.10:9000"
+FPM1_2="192.168.10.11:9000"
+FPM2_1="192.168.20.10:9000"
+FPM2_2="192.168.20.11:9000"
+CONFIG=/etc/nginx/sites-enabled/scs.conf
 
+case $SERVER in
+	1)
+		sed -i "s/\$SERVER1/$FPM1_1/g" $CONFIG
+		sed -i "s/\$SERVER1/$FPM1_2/g" $CONFIG
+		sed -i "s/\$SERVER_NAME/$SERVER_NAME1/g" $CONFIG
+
+	;;
+	2)
+		sed -i "s/\$SERVER1/$FPM2_1/g" $CONFIG
+		sed -i "s/\$SERVER1/$FPM2_2/g" $CONFIG
+		sed -i "s/\$SERVER_NAME/$SERVER_NAME2/g" $CONFIG
+	;;
+esac
 exec nginx
