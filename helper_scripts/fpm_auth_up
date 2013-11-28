@@ -1,8 +1,9 @@
 #!/bin/bash
 PIPE=helper_scripts/pipework
+PROJECT=$PWD/php-fpm-auth/laravel/scs-auth
 
-sudo $PIPE bush2 $(docker run -d -expose 9000 pinnokio/php-fpm:auth) 192.168.20.10/24
+sudo $PIPE bush2 $(docker run -d -expose 9000 -v $PROJECT:/var/www pinnokio/php-fpm:auth) 192.168.20.10/24
 echo "Php-fpm auth container 1 of 2 started"
 
-sudo $PIPE bush2 $(docker run -d -expose 9000 pinnokio/php-fpm:auth) 192.168.20.11/24
+sudo $PIPE bush2 $(docker run -d -expose 9000 -v $PROJECT:/var/www pinnokio/php-fpm:auth) 192.168.20.11/24
 echo "Php-fpm auth container 2 of 2 started"
