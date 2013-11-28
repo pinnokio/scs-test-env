@@ -7,6 +7,6 @@ WWW_DIR=/var/www
 sed -i "s/listen = 127.0.0.1:9000/listen = 9000/g" $POOL_CFG
 sed -i "s/;listen.allowed_clients = 127.0.0.1/listen.allowed_clients = 192.168.20.1/g" $POOL_CFG
 
-chown -R www-data:www-data $WWW_DIR
+chgrp -R www-data $WWW_DIR
 
 /usr/sbin/php5-fpm
