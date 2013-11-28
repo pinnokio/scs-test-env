@@ -1,8 +1,9 @@
 #!/bin/bash
 PIPE=helper_scripts/pipework
+PROJECT=$PWD/php-fpm-data/laravel/scs-data
 
-sudo $PIPE bush1 $(docker run -d -expose 9000 pinnokio/php-fpm:data) 192.168.10.10/24
+sudo $PIPE bush1 $(docker run -d -expose 9000 -v $PROJECT:/var/www pinnokio/php-fpm:data) 192.168.10.10/24
 echo "Php-fpm data container 1 of 2 started"
 
-sudo $PIPE bush1 $(docker run -d -expose 9000 pinnokio/php-fpm:data) 192.168.10.11/24
+sudo $PIPE bush1 $(docker run -d -expose 9000 -v $PROJECT:/var/www pinnokio/php-fpm:data) 192.168.10.11/24
 echo "Php-fpm data container 2 of 2 started"
