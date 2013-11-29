@@ -2,6 +2,8 @@
 PIPE=helper_scripts/pipework
 PROJECT=$PWD/php-fpm-data/laravel/scs-data
 
+psql -x -h 192.168.20.20 -p 5432 -U postgres -c 'CREATE DATABASE "scs-auth" OWNER postgres;'
+
 sudo $PIPE bush1 $(docker run -d -expose 9000 -v $PROJECT:/var/www pinnokio/php-fpm:data) 192.168.10.10/24
 echo "Php-fpm data container 1 of 2 started"
 

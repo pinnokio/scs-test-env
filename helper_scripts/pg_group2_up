@@ -4,11 +4,11 @@ PIPE=helper_scripts/pipework
 
 sudo $PIPE bush2 $(docker run -d -expose 22 -expose 5432 -e ROLE=MASTER2 $PG_IMG) 192.168.20.20/24
 echo "Master of AUTH group started"
-sleep 10
+sleep 30
 
 sudo $PIPE bush2 $(docker run -d -expose 22 -expose 5432 -e ROLE=SLAVE2 $PG_IMG) 192.168.20.21/24
 echo "Slave 1 of AUTH group started"
-sleep 20
+sleep 60
 
 sudo $PIPE bush2 $(docker run -d -expose 22 -expose 5432 -e ROLE=SLAVE2 $PG_IMG) 192.168.20.22/24
 echo "Slave 2 of AUTH group started"

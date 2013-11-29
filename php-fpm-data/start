@@ -7,7 +7,8 @@ WWW_DIR=/var/www
 sed -i "s/listen = 127.0.0.1:9000/listen = 9000/g" $POOL_CFG
 sed -i "s/;listen.allowed_clients = 127.0.0.1/listen.allowed_clients = 192.168.10.1/g" $POOL_CFG
 #ENABLING FPM STATUS URL
-sed -i "/;pm.status/pm.status/g" $POOL_CFG
+sed -i "s/pm = dynamic/pm = ondemand/g" $POOL_CFG
+sed -i "s/pm.max_children = 10/pm.max_children = 42/g" $POOL_CFG
 
 chgrp -R www-data $WWW_DIR
 
